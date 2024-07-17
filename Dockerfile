@@ -14,8 +14,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Maven by downloading the binary archive
-RUN curl -fsSL https://downloads.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz | tar xz -C /opt && \
-    ln -s /opt/apache-maven-3.8.6 /opt/maven
+RUN curl -fsSL https://dlcdn.apache.org/maven/maven-3/3.9.8/binaries/apache-maven-3.9.8-bin.tar.gz | tar xz -C /opt && \
+    ln -s /opt/apache-maven-3.9.8 /opt/maven
 
 # Install Docker CLI
 RUN apt-get update && \
