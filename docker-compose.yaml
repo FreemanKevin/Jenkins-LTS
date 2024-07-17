@@ -1,0 +1,18 @@
+#version: '3.8'
+
+services:
+  jenkins:
+    image: docker.m.daocloud.io/codeckevin/jenkins-lts:2.452.2-lts-jdk17 
+    container_name: jenkins
+    extra_hosts:
+      - "harbor.guodi.com:192.168.19.137"
+    environment:
+      JAVA_OPTS: "-Djenkins.install.runSetupWizard=false -Dhudson.PluginManager.noPluginExtensions=true"
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /data/jenkins:/var/jenkins_home
+    restart: always
