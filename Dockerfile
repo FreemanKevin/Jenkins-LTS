@@ -13,12 +13,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install a specific version of Maven
-RUN apt-get update && \
-    apt-get install -y maven=3.6.3 && \
-    # Clean apt cache to reduce image size
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# Install Maven by downloading the binary archive
+RUN curl -fsSL http://apache.osuosl.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz | tar xz -C /opt && \
+    ln -s /opt/apache-maven-3.6.3 /opt/maven
 
 # Install Docker CLI
 RUN apt-get update && \
@@ -40,9 +37,6 @@ RUN apt-get update && \
 # Switch back to the jenkins user
 USER jenkins
 
-# Set environment variables
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
-ENV PATH $JAVA_HOME/bin:$PATH
-
-# Override the Jenkins JAVA_HOME setting to ensure it uses the correct Java version
-ENV JENKINS_JAVA_HOME $JAVA_HOME
+# Set Maven and Java environment variables
+ENV MAVEN_HOME=/opt/maven
+ENV PATH=$MAVEN_HOME/bin:$PATH
