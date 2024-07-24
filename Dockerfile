@@ -7,6 +7,7 @@ USER root
 # Install Node.js and npm
 # Using NodeSource's official setup script to install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get update && \
     apt-get install -y nodejs && \
     npm install -g npm@10.7.0 && \
     # Clean apt cache to reduce image size
@@ -17,17 +18,15 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
 RUN curl -fsSL https://dlcdn.apache.org/maven/maven-3/3.9.8/binaries/apache-maven-3.9.8-bin.tar.gz | tar xz -C /opt && \
     ln -s /opt/apache-maven-3.9.8 /opt/maven
 
-# Install Docker CLI
+# Install Docker CLI for both amd64 and arm64 architectures
 RUN apt-get update && \
     apt-get install -y apt-transport-https \
     ca-certificates \
     curl \
     gnupg-agent \
     software-properties-common && \
-    # Add Docker's official GPG key
     curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && \
-    # Set up the stable repository
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list && \
+    echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list && \
     apt-get update && \
     apt-get install -y docker-ce-cli && \
     # Clean apt cache and temporary files to reduce image size

@@ -16,6 +16,9 @@ jobs:
     - name: Check out the repository
       uses: actions/checkout@v3
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
@@ -32,6 +35,7 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: codeckevin/jenkins-lts:2.452.2-lts-jdk17
+        platforms: linux/amd64,linux/arm64
 
     - name: Build and load Docker image
       if: github.event_name != 'push'
@@ -40,3 +44,4 @@ jobs:
         context: .
         file: ./Dockerfile
         load: true
+        platforms: linux/amd64,linux/arm64

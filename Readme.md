@@ -23,4 +23,4 @@ docker-compose up -d
 
 ## License :scroll:
 
-This project is licensed under the Apache License 2.0.
+This project is licensed under the <u>[Apache License 2.0](LICENSE)</u>.
