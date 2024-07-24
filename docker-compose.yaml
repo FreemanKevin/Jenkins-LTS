@@ -2,10 +2,10 @@
 
 services:
   jenkins:
-    image: docker.m.daocloud.io/codeckevin/jenkins-lts:2.452.2-lts-jdk17 
+    image: codeckevin/jenkins-lts:2.452.2-lts-jdk17 
     container_name: jenkins
     extra_hosts:
-      - "harbor.guodi.com:192.168.19.137"
+      - "harbor.localhost.com:192.168.19.137"
     environment:
       JAVA_OPTS: "-Djenkins.install.runSetupWizard=false -Dhudson.PluginManager.noPluginExtensions=true"
     ports:
